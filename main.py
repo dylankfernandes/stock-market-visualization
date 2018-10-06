@@ -9,13 +9,13 @@ import urllib
 
 style.use('fivethirtyeight')
 
-def get_query(stock, period='monthly'):
-  interval = 
-  if(interval == 'monthly'):
-
+def get_query(api_key, stock, interval='monthly'): 
+  return 'https://www.alphavantage.co/query?function=TIME_SERIES_' + interval.upper() + '&symbol=MSFT&apikey=' + api_key + '&datatype=csv'
 
 def get_stock_data(stock):
   api_key = open('../api-key-alpha-vantage.txt', 'r').read()
-  stock_url = 
+  stock_url = get_query(api_key, stock)
+  source_code = urllib.request.urlopen(stock_url).read().decode()
+  print(source_code)
 
-print(api_key)
+get_stock_data('TSLA')
