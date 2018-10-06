@@ -9,3 +9,13 @@ import urllib
 
 style.use('fivethirtyeight')
 
+def get_query(stock, period='monthly'):
+  interval = 
+  if(interval == 'monthly'):
+
+
+def get_stock_data(stock):
+  api_key = open('../api-key-alpha-vantage.txt', 'r').read()
+  stock_url = 
+
+print(api_key)
