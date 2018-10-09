@@ -16,7 +16,6 @@ def convertToMPLDate(fmt, encoding='utf-8'):
     return strconverter(s)
   return converter
 
-
 # Get formatted url for query
 def get_query(api_key, stock, interval='monthly'): 
   return 'https://www.alphavantage.co/query?function=TIME_SERIES_' + interval.upper() + '&symbol=MSFT&apikey=' + api_key + '&datatype=csv'
@@ -46,8 +45,14 @@ def get_stock_data(stock):
   # Define the axis and figure
   fig = plt.figure()
   axis = plt.subplot2grid((1, 1), (0, 0))
-  axis.plot_date(x, y, label='Stock Price')
+  axis.plot(x, y, label='Stock Price')
   axis.xaxis.set_major_locator(mticker.MaxNLocator(10))
+  axis.plot([],[],linewidth=5, label='loss', color='r',alpha=0.5)
+  axis.plot([],[],linewidth=5, label='gain', color='g',alpha=0.5)
+  axis.axhline(y[0], color='k', linewidth=2)
+  # axis.fill_between(x, y, y[0],where=y >= y[0], facecolor='g', alpha=0.5)
+  # axis.fill_between(x, y, y[0],where=y <= y[0], facecolor='r', alpha=0.5)
+  axis.fill_between(x, y, y[0], facecolor='b', alpha=0.5)
   axis.grid(True)
 
   # Rotate the date labels to better fit the graph
