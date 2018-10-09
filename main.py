@@ -9,13 +9,6 @@ import urllib
 
 style.use('fivethirtyeight')
 
-def convertToMPLDate(fmt, encoding='utf-8'):
-  strconverter = mdates.strpdate2num(fmt)
-  def converter(b):
-    s = b.decode(encoding)
-    return strconverter(s)
-  return converter
-
 # Get formatted url for query
 def get_query(api_key, stock, interval='monthly'): 
   return 'https://www.alphavantage.co/query?function=TIME_SERIES_' + interval.upper() + '&symbol=MSFT&apikey=' + api_key + '&datatype=csv'
@@ -34,7 +27,7 @@ def get_stock_data(stock):
     split_line = line.split(',')
     if len(split_line) == 6:
       if 'timestamp' not in line:
-        stock_data.append([split_line[0], split_line[1], float(split_line[2])])
+        stock_data.append([split_line[0], split_line[1]])
 
   # Declare the x and y list of variables
   stock_data = list(reversed(stock_data))
@@ -47,11 +40,7 @@ def get_stock_data(stock):
   axis = plt.subplot2grid((1, 1), (0, 0))
   axis.plot(x, y, label='Stock Price')
   axis.xaxis.set_major_locator(mticker.MaxNLocator(10))
-  axis.plot([],[],linewidth=5, label='loss', color='r',alpha=0.5)
-  axis.plot([],[],linewidth=5, label='gain', color='g',alpha=0.5)
   axis.axhline(y[0], color='k', linewidth=2)
-  # axis.fill_between(x, y, y[0],where=y >= y[0], facecolor='g', alpha=0.5)
-  # axis.fill_between(x, y, y[0],where=y <= y[0], facecolor='r', alpha=0.5)
   axis.fill_between(x, y, y[0], facecolor='b', alpha=0.5)
   axis.grid(True)
 
@@ -66,4 +55,4 @@ def get_stock_data(stock):
   plt.subplots_adjust(bottom=0.20, wspace=0.2, hspace=0)
   plt.show()
 
-get_stock_data('TSLA')
+get_stock_data('GOOGL')
